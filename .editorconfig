@@ -14,3 +14,44 @@ trim_trailing_whitespace = false
 [*.{bat,cmd,ps1}]
 end_of_line = crlf
 trim_trailing_whitespace = false
+
+# Гайд по стилю от uLearn
+# https://ulearn.me/course/basicprogramming/Praktika_Refaktoring__51aa14fb-1176-474f-a7ca-aafb86ff1967
+# https://docs.google.com/document/d/1GZX3_0Cq3RI2GmhvisUsB5l1QR6MDPIMqAlONgnG_2c
+
+[*.cs]
+
+# var
+csharp_style_var_for_built_in_types = true:suggestion
+csharp_style_var_when_type_is_apparent = true:suggestion
+
+# Имена методов UpperCamelCase
+dotnet_naming_rule.methods_should_be_pascal_case.severity = warning
+dotnet_naming_rule.methods_should_be_pascal_case.symbols = methods
+dotnet_naming_rule.methods_should_be_pascal_case.style = pascal_case_style
+
+dotnet_naming_symbols.methods.applicable_kinds = method
+dotnet_naming_style.pascal_case_style.capitalization = pascal_case
+
+# Локальные переменные lowerCamelCase
+dotnet_naming_rule.locals_should_be_camel_case.severity = warning
+dotnet_naming_rule.locals_should_be_camel_case.symbols = locals
+dotnet_naming_rule.locals_should_be_camel_case.style = camel_case_style
+
+dotnet_naming_symbols.locals.applicable_kinds = local
+dotnet_naming_style.camel_case_style.capitalization = camel_case
+
+# Скобки для многосстрочных if/for
+csharp_prefer_braces = always:warning
+
+# Тело if/for на новой строке
+csharp_new_line_before_open_brace = all:warning
+
+# Пробелы вокруг операторов
+csharp_space_around_binary_operators = before_and_after
+
+# Модификаторы доступа обязателены
+dotnet_style_require_accessibility_modifiers = always:warning
+
+# Лямбды-стрелочки
+csharp_style_expression_bodied_properties = when_possible:warning
