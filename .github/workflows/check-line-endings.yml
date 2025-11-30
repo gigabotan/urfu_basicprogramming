@@ -1,0 +1,28 @@
+name: Check line endings
+
+on:
+  push:
+    branches: [main, '**']
+  pull_request:
+    branches: [main]
+
+jobs:
+  line-endings:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set git defaults
+        run: |
+          git config --global core.autocrlf false
+
+      - name: Check for incorrect line endings
+        run: |
+          # Renormalize according to .gitattributes and check whether any files would change
+          git add --renormalize .
+          if ! git diff --exit-code; then
+            echo "Repository contains files that don't match the repository's line ending rules."
+            echo "Run 'git add --renormalize .' locally, commit, and push changes to normalize line endings."
+            exit 1
+          fi
