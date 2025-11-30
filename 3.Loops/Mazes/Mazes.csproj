@@ -39,4 +39,14 @@
       <PackageReference Include="Avalonia.Themes.Fluent" Version="11.3.6" />
       <PackageReference Include="System.Drawing.Common" Version="9.0.9" />
     </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="8.0.0" PrivateAssets="all" />
+    </ItemGroup>
+
+    <PropertyGroup>
+      <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+      <AnalysisMode>AllEnabledByDefault</AnalysisMode>
+      <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    </PropertyGroup>
 </Project>
