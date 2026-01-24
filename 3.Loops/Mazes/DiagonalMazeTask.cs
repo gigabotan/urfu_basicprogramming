@@ -7,18 +7,23 @@ public static class DiagonalMazeTask
         var stepsRight = width - 3;
         var stepsDown = height - 3;
         var isRightFirst = stepsRight > stepsDown;
-        var count = isRightFirst ? stepsDown : stepsRight;
-        var step = isRightFirst ? stepsRight / count : stepsDown / count;
+        var moveCount = isRightFirst ? stepsDown : stepsRight;
+        var stepsPerMove = isRightFirst ? stepsRight / moveCount : stepsDown / moveCount;
 
-        for (var i = 0; i < count; i++)
-        {
-            Move(robot, step, isRightFirst ? Direction.Right : Direction.Down);
-            Move(robot, 1, isRightFirst ? Direction.Down : Direction.Right);
-        }
-        Move(robot, step, isRightFirst ? Direction.Right : Direction.Down);
+        ExecuteDiagonalSteps(robot, moveCount, stepsPerMove, isRightFirst);
+        MoveToDirection(robot, stepsPerMove, isRightFirst ? Direction.Right : Direction.Down);
     }
 
-    public static void Move(Robot robot, int count, Direction direction)
+    private static void ExecuteDiagonalSteps(Robot robot, int moveCount, int stepsPerMove, bool isRightFirst)
+    {
+        for (var i = 0; i < moveCount; i++)
+        {
+            MoveToDirection(robot, stepsPerMove, isRightFirst ? Direction.Right : Direction.Down);
+            MoveToDirection(robot, 1, isRightFirst ? Direction.Down : Direction.Right);
+        }
+    }
+
+    public static void MoveToDirection(Robot robot, int count, Direction direction)
     {
         for (var i = 0; i < count; i++)
             robot.MoveTo(direction);

@@ -15,9 +15,9 @@ public static class SnakeMazeTask
         Move(robot, width - 3, Direction.Left);
     }
 
-    public static void Move(Robot robot, int steps, Direction direction)
+    private static void Move(Robot robot, int stepCount, Direction direction)
     {
-        for (var i = 0; i < steps; i++)
+        for (var i = 0; i < stepCount; i++)
             robot.MoveTo(direction);
     }
 }
