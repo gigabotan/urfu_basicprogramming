@@ -19,24 +19,12 @@ public class QuotedFieldTaskTests
     [TestCase("'unclosed", 0, "unclosed", 9)]
     [TestCase("\"a\\\\b\"", 0, "a\\b", 6)]
     [TestCase("\"test\\\"quote\"", 0, "test\"quote", 13)]
-    public void Test(string line, int startIndex, string expectedValue, int expectedLength)
+    public void Test(string line, int startIndex,
+        string expectedValue, int expectedLength)
     {
         var actualToken = QuotedFieldTask.ReadQuotedField(line, startIndex);
-        NUnit.Framework.Legacy.ClassicAssert.AreEqual(new Token(expectedValue, startIndex, expectedLength), actualToken);
-    }
-
-    [Test]
-    public void TestMain()
-    {
-        // Простой способ проверить работу метода
-        var token1 = QuotedFieldTask.ReadQuotedField("'hello'", 0);
-        System.Console.WriteLine($"Test 1: {token1}");
-
-        var token2 = QuotedFieldTask.ReadQuotedField("\"a \\\"c\\\"\"", 0);
-        System.Console.WriteLine($"Test 2: {token2}");
-
-        var token3 = QuotedFieldTask.ReadQuotedField("\"unclosed", 0);
-        System.Console.WriteLine($"Test 3: {token3}");
+        var expectedToken = new Token(expectedValue, startIndex, expectedLength);
+        NUnit.Framework.Legacy.ClassicAssert.AreEqual(expectedToken, actualToken);
     }
 }
 
@@ -44,39 +32,37 @@ class QuotedFieldTask
 {
     public static Token ReadQuotedField(string line, int startIndex)
     {
-        // Гарантируется, что на startIndex находится открывающая кавычка
-        char quoteChar = line[startIndex];
-        int currentIndex = startIndex + 1;
-        string value = "";
-
+        var quoteChar = line[startIndex];
+        var currentIndex = startIndex + 1;
+        var value = "";
         while (currentIndex < line.Length)
         {
-            char currentChar = line[currentIndex];
-
-            // Проверяем экранирование
-            if (currentChar == '\\' && currentIndex + 1 < line.Length)
-            {
-                // Добавляем экранированный символ
-                value += line[currentIndex + 1];
-                currentIndex += 2;
-            }
-            // Проверяем закрывающую кавычку
-            else if (currentChar == quoteChar)
-            {
-                // Нашли закрывающую кавычку
-                int length = currentIndex - startIndex + 1;
-                return new Token(value, startIndex, length);
-            }
-            else
-            {
-                // Обычный символ
-                value += currentChar;
-                currentIndex++;
-            }
+            var result = ProcessCharacter(line, quoteChar, startIndex,
+                currentIndex, value);
+            if (result.Token != null)
+                return result.Token;
+            currentIndex = result.Index;
+            value = result.Value;
         }
+        return new Token(value, startIndex, line.Length - startIndex);
+    }
 
-        // Кавычка не закрыта - поле до конца строки
-        int finalLength = line.Length - startIndex;
-        return new Token(value, startIndex, finalLength);
+    private static (Token Token, int Index, string Value) ProcessCharacter(
+        string line, char quoteChar, int startIndex, int index, string value)
+    {
+        var currentChar = line[index];
+        if (currentChar == '\\' && index + 1 < line.Length)
+        {
+            return (null, index + 2, value + line[index + 1]);
+        }
+        else if (currentChar == quoteChar)
+        {
+            var token = new Token(value, startIndex, index - startIndex + 1);
+            return (token, index, value);
+        }
+        else
+        {
+            return (null, index + 1, value + currentChar);
+        }
     }
 }
