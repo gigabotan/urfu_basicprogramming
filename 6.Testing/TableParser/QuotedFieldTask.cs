@@ -60,9 +60,6 @@ class QuotedFieldTask
             var token = new Token(value, startIndex, index - startIndex + 1);
             return (token, index, value);
         }
-        else
-        {
-            return (null, index + 1, value + currentChar);
-        }
+        return (null, index + 1, value + currentChar);
     }
 }

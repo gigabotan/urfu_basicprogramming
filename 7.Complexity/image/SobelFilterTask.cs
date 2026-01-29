@@ -6,14 +6,14 @@ internal static class SobelFilterTask
 {
     public static double[,] SobelFilter(double[,] g, double[,] sx)
     {
-        var rows = g.GetLength(0);
-        var cols = g.GetLength(1);
-        var result = new double[rows, cols];
+        var imageWidth = g.GetLength(0);
+        var imageHeight = g.GetLength(1);
+        var result = new double[imageWidth, imageHeight];
         var sy = Transpose(sx);
         var kernelSize = sx.GetLength(0);
         var offset = kernelSize / 2;
-        for (var x = offset; x < rows - offset; x++)
-            for (var y = offset; y < cols - offset; y++)
+        for (var x = offset; x < imageWidth - offset; x++)
+            for (var y = offset; y < imageHeight - offset; y++)
             {
                 var gx = Convolve(g, sx, x, y);
                 var gy = Convolve(g, sy, x, y);

@@ -32,7 +32,7 @@ public class AngryBirdsTestCase : TestCase
         ui.Circle(50, 0, 2, new Pen(Brushes.Blue));
         if (LastException == null)
         {
-	        var nonZeroDistance = distance > 0 ? distance : 1;
+            var nonZeroDistance = distance > 0 ? distance : 1;
             //Траектория
             foreach (var dot in trajectory.Where((_, i) => i % 10 == 0))
                 ui.Dot(-25 + dot.Item1 * 50 / nonZeroDistance, -dot.Item2 * 50 / nonZeroDistance, Brushes.Red);

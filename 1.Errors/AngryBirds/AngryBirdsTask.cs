@@ -7,7 +7,10 @@ public static class AngryBirdsTask
     public static double FindSightAngle(double v, double distance)
     {
         const double g = 9.8;
-        if (double.IsNaN(v) || double.IsNaN(distance) || double.IsInfinity(v) || double.IsInfinity(distance))
+        if (double.IsNaN(v)
+            || double.IsNaN(distance)
+            || double.IsInfinity(v)
+            || double.IsInfinity(distance))
             return double.NaN;
         if (v <= 0) return double.NaN;
         if (distance == 0) return 0.0;
