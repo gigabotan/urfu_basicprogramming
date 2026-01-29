@@ -26,12 +26,12 @@ namespace Geometry
             return Math.Sqrt(deltaX * deltaX + deltaY * deltaY);
         }
 
-        public static Vector Add(Vector vector1, Vector vector2)
+        public static Vector Add(Vector vector, Vector otherVector)
         {
             return new Vector
             {
-                X = vector1.X + vector2.X,
-                Y = vector1.Y + vector2.Y
+                X = vector.X + otherVector.X,
+                Y = vector.Y + otherVector.Y
             };
         }
 

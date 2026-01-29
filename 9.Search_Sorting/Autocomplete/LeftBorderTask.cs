@@ -10,13 +10,11 @@ public class LeftBorderTask
         if (left >= right - 1)
             return left;
 
-        int middle = left + (right - left) / 2;
-        bool startsWithPrefix = phrases[middle].StartsWith(prefix, StringComparison.InvariantCultureIgnoreCase);
-        int comparison = string.Compare(phrases[middle], prefix, StringComparison.InvariantCultureIgnoreCase);
-        if (startsWithPrefix || comparison >= 0)
-        {
-            return GetLeftBorderIndex(phrases, prefix, left, middle);
-        }
-        return GetLeftBorderIndex(phrases, prefix, middle, right);
+        var middle = left + (right - left) / 2;
+        var startsWithPrefix = phrases[middle].StartsWith(prefix, StringComparison.InvariantCultureIgnoreCase);
+        var comparison = string.Compare(phrases[middle], prefix, StringComparison.InvariantCultureIgnoreCase);
+        return (startsWithPrefix || comparison >= 0) ?
+            GetLeftBorderIndex(phrases, prefix, left, middle) :
+            GetLeftBorderIndex(phrases, prefix, middle, right);
     }
 }
