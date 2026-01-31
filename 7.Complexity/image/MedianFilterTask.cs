@@ -7,15 +7,15 @@ internal static class MedianFilterTask
 {
     public static double[,] MedianFilter(double[,] original)
     {
-        var rows = original.GetLength(0);
-        var cols = original.GetLength(1);
-        var result = new double[rows, cols];
+        var width = original.GetLength(0);
+        var height = original.GetLength(1);
+        var newImage = new double[width, height];
 
-        for (var x = 0; x < rows; x++)
-            for (var y = 0; y < cols; y++)
-                result[x, y] = GetMedian(original, x, y);
+        for (var x = 0; x < width; x++)
+            for (var y = 0; y < height; y++)
+                newImage[x, y] = GetMedian(original, x, y);
 
-        return result;
+        return newImage;
     }
 
     private static double GetMedian(double[,] original, int x, int y)
@@ -45,7 +45,6 @@ internal static class MedianFilterTask
         var count = values.Count;
         if (count % 2 == 1)
             return values[count / 2];
-        else
-            return (values[count / 2 - 1] + values[count / 2]) / 2.0;
+        return (values[count / 2 - 1] + values[count / 2]) / 2.0;
     }
 }

@@ -16,10 +16,10 @@ public class Program
         var parts = userInput.Split(' ');
         var initialAmount = double.Parse(parts[0]);
         var annualRate = double.Parse(parts[1]);
-        var months = int.Parse(parts[2]);
+        var monthCount = int.Parse(parts[2]);
 
         var monthlyRate = annualRate / 100 / 12;
-        var finalAmount = initialAmount * Math.Pow(1 + monthlyRate, months);
+        var finalAmount = initialAmount * Math.Pow(1 + monthlyRate, monthCount);
 
         return Math.Floor(finalAmount);
     }

@@ -4,7 +4,10 @@ namespace DistanceTask;
 
 public static class DistanceTask
 {
-    public static double GetDistanceToSegment(double ax, double ay, double bx, double by, double x, double y)
+    public static double GetDistanceToSegment(
+        double ax, double ay,
+        double bx, double by,
+        double x, double y)
     {
         var segmentLengthSquared = GetSquaredDistance(ax, ay, bx, by);
 
@@ -22,7 +25,11 @@ public static class DistanceTask
         return GetDistanceToProjectedPoint(ax, ay, bx, by, x, y, projectionParameter);
     }
 
-    private static double CalculateProjectionParameter(double ax, double ay, double bx, double by, double x, double y, double segmentLengthSquared)
+    private static double CalculateProjectionParameter(
+        double ax, double ay,
+        double bx, double by,
+        double x, double y,
+        double segmentLengthSquared)
     {
         var vectorToPointX = x - ax;
         var vectorToPointY = y - ay;
@@ -32,14 +39,20 @@ public static class DistanceTask
         return dotProduct / segmentLengthSquared;
     }
 
-    private static double GetDistanceToProjectedPoint(double ax, double ay, double bx, double by, double x, double y, double projectionParameter)
+    private static double GetDistanceToProjectedPoint(
+        double ax, double ay,
+        double bx, double by,
+        double x, double y,
+        double projectionParameter)
     {
         var projectedX = ax + projectionParameter * (bx - ax);
         var projectedY = ay + projectionParameter * (by - ay);
         return GetDistance(projectedX, projectedY, x, y);
     }
 
-    private static double GetDistance(double x1, double y1, double x2, double y2)
+    private static double GetDistance(
+        double x1, double y1,
+        double x2, double y2)
     {
         return Math.Sqrt(GetSquaredDistance(x1, y1, x2, y2));
     }

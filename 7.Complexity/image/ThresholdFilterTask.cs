@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Recognizer;
 
@@ -8,19 +7,18 @@ public static class ThresholdFilterTask
 {
     public static double[,] ThresholdFilter(double[,] original, double whitePixelsFraction)
     {
-        var rows = original.GetLength(0);
-        var cols = original.GetLength(1);
-        var allPixels = GetAllPixels(original, rows, cols);
-        var threshold = CalculateThreshold(allPixels, rows * cols, whitePixelsFraction);
-        return ApplyThreshold(original, rows, cols, threshold);
+        var width = original.GetLength(0);
+        var height = original.GetLength(1);
+        var allPixels = GetAllPixels(original, width, height);
+        var threshold = CalculateThreshold(allPixels, width * height, whitePixelsFraction);
+        return ApplyThreshold(original, width, height, threshold);
     }
 
     private static List<double> GetAllPixels(double[,] original, int rows, int cols)
     {
-        var allPixels = new List<double>();
-        for (var x = 0; x < rows; x++)
-            for (var y = 0; y < cols; y++)
-                allPixels.Add(original[x, y]);
+        var allPixels = new List<double>(rows * cols);
+        foreach (var value in original)
+            allPixels.Add(value);
         return allPixels;
     }
 
